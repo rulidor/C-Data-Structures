@@ -2,12 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "linked_list.h"
 
-struct Node {
-    void* data;
-    char key[20];
-    struct Node* next;
-};
 
 void insert_at_beginning(struct Node **head, void* data, size_t data_size, char* key);
 void insert_at_end(struct Node **head, void* data, size_t data_size, char* key);
@@ -154,7 +150,7 @@ int main(){
     insert_at_end(&head, p_data, sizeof(int), "4");
 
     // delete_by_key(&head, "3");
-    delete_all_list(&head);
+    // delete_all_list(&head);
 
     print_list(head, 'd');
 }
