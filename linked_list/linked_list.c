@@ -11,8 +11,9 @@ struct Node {
 
 void insert_at_beginning(struct Node **head, void* data, size_t data_size, char* key);
 void insert_at_end(struct Node **head, void* data, size_t data_size, char* key);
-void delete_by_key(struct Node *head, int index); //todo
+void delete_by_key(struct Node **head, char* key);
 void print_list(struct Node *head, char format);
+void free_node(struct Node* node); //todo
 
 
 void insert_at_beginning(struct Node **head, void* data, size_t data_size, char* key){
@@ -71,6 +72,35 @@ void print_list(struct Node *head, char format){
     }
 }
 
+void delete_by_key(struct Node **head, char* key){
+    if (*head == NULL){
+        return;
+    }
+    struct Node* tmp = *head;
+    if (strcmp(key, tmp->key) == 0){
+        if (tmp->next == NULL){
+            *head = NULL;
+             return;
+        } else {
+            *head = tmp->next;
+            return;
+        }
+    }
+
+    struct Node* prev = tmp;
+
+    while (tmp != NULL){
+        if (strcmp(tmp->key, key) != 0){
+            prev = tmp;
+            tmp = tmp->next;
+            continue;
+        }
+        //tmp is the node we are searching for
+        prev->next = tmp->next;
+        return;
+    }
+}
+
 
 
 
@@ -88,6 +118,8 @@ int main(){
     insert_at_end(&head, p_data, sizeof(int), "3");
     data = 3;
     insert_at_end(&head, p_data, sizeof(int), "4");
+
+    delete_by_key(&head, "4");
 
     print_list(head, 'd');
 }
