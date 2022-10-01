@@ -12,8 +12,26 @@ struct Node {
 void insert_at_beginning(struct Node **head, void* data, size_t data_size, char* key);
 void insert_at_end(struct Node **head, void* data, size_t data_size, char* key);
 void delete_by_key(struct Node **head, char* key);
+void delete_all_list(struct Node **head);
 void print_list(struct Node *head, char format);
-void free_node(struct Node* node); //todo
+void free_node(struct Node* node);
+struct Node* get_node_by_key(struct Node* head, char* key);
+
+void free_node(struct Node* node){
+    node->next = NULL;
+    free(node->data);
+    free(node);
+}
+
+void delete_all_list(struct Node **head){
+    struct Node* tmp = *head;
+    while(tmp != NULL){
+        struct Node* next = tmp->next;
+        free_node(tmp);
+        tmp = next;
+    }
+    *head = NULL;
+}
 
 
 void insert_at_beginning(struct Node **head, void* data, size_t data_size, char* key){
@@ -72,6 +90,18 @@ void print_list(struct Node *head, char format){
     }
 }
 
+struct Node* get_node_by_key(struct Node* head, char* key){
+    struct Node* tmp = head;
+    while (tmp != NULL){
+        if (strcmp(key, tmp->key) == 0){
+            return tmp;
+        }
+        tmp = tmp->next;
+    }
+    return NULL;
+}
+
+
 void delete_by_key(struct Node **head, char* key){
     if (*head == NULL){
         return;
@@ -79,10 +109,13 @@ void delete_by_key(struct Node **head, char* key){
     struct Node* tmp = *head;
     if (strcmp(key, tmp->key) == 0){
         if (tmp->next == NULL){
+            free_node(tmp);
             *head = NULL;
              return;
         } else {
-            *head = tmp->next;
+            struct Node* next_node = tmp->next;
+            free_node(tmp);
+            *head = next_node;
             return;
         }
     }
@@ -97,6 +130,7 @@ void delete_by_key(struct Node **head, char* key){
         }
         //tmp is the node we are searching for
         prev->next = tmp->next;
+        free_node(tmp);
         return;
     }
 }
@@ -119,7 +153,8 @@ int main(){
     data = 3;
     insert_at_end(&head, p_data, sizeof(int), "4");
 
-    delete_by_key(&head, "4");
+    // delete_by_key(&head, "3");
+    delete_all_list(&head);
 
     print_list(head, 'd');
 }
