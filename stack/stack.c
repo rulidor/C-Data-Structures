@@ -95,15 +95,15 @@ int get_size(struct Node* top){
 int main(){
 
     struct Node* my_stack = NULL;
-    char* num = "1";
-    char** pnum = &num;
-    push(&my_stack, pnum, sizeof(num));
-    num = "2";
-    push(&my_stack, pnum, sizeof(num));
-    num = "3";
-    push(&my_stack, pnum, sizeof(num));
-    num = "4";
-    push(&my_stack, pnum, sizeof(num));
+    char* str = "1";
+    char** pstr = &str;
+    push(&my_stack, pstr, sizeof(str));
+    str = "2";
+    push(&my_stack, pstr, sizeof(str));
+    str = "3";
+    push(&my_stack, pstr, sizeof(str));
+    str = "4";
+    push(&my_stack, pstr, sizeof(str));
 
     print_stack(my_stack, 's');
 
