@@ -71,7 +71,7 @@ void print_list(struct Node *head, char format){
         switch (format)
         {
         case 's':
-            printf("%s", *(char*)(tmp->data)); //todo: check if casting to pointer to string needed: char**
+            printf("%s", *(char**)(tmp->data));
             break;
 
         case 'd':
